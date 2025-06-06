@@ -152,14 +152,14 @@ sudo apt install libyaml-cpp-dev
 ```
 
 ```sh
-cd ~/git
-git clone git@github.com:catkin/catkin_simple.git
-git clone git@github.com:ethz-asl/glog_catkin.git
-git clone git@github.com:leggedrobotics/pybind11_catkin.git
+cd ~/deps
+git clone https://github.com/catkin/catkin_simple.git
+git clone https://github.com/ethz-asl/glog_catkin.git
+git clone https://github.com/leggedrobotics/pybind11_catkin.git
 cd ~/catkin_ws/src
-ln -s ../../git/catkin_simple .
-ln -s ../../git/glog_catkin .
-ln -s ../../git/pybind11_catkin .
+ln -s ../../deps/catkin_simple .
+ln -s ../../deps/glog_catkin .
+ln -s ../../deps/pybind11_catkin .
 ```
 
 If you need CUDA support, you need to build OpenCV with CUDA. Check the [instructions below](#cuda-support)
