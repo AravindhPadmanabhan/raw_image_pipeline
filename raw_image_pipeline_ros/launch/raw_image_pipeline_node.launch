@@ -1,10 +1,11 @@
 <launch>
   <!-- General options-->
   <arg name="camera_name"                          default="cam0"/>
-  <arg name="input_topic"                          default="alphasense_driver_ros/cam0"/>
+  <arg name="input_topic"                          default="/alphasense_driver_ros/cam0/debayered/image"/>
+  <arg name="compressed_topic"                     default="$(arg input_topic)/compressed"/>
   <arg name="input_type"                           default="color"/>
 
-  <arg name="output_prefix"                       default="alphasense_driver_ros/cam0"/>
+  <arg name="output_prefix"                       default="/alphasense_driver_ros/cam0"/>
   <arg name="output_frame"                         default="cam0_sensor_frame_helper"/>
   
   <arg name="launch_prefix"                        default=""/>
@@ -17,14 +18,14 @@
   <arg name="disable_compression_plugins"          default="true"/>     <!-- To avoid publication of theora or compressedDepth topics -->
 
   <!-- Modules -->
-  <arg name="debayer/enabled"                      default="true"/>
-  <arg name="flip/enabled"                         default="true"/>
+  <arg name="debayer/enabled"                      default="false"/>
+  <arg name="flip/enabled"                         default="false"/>
   <arg name="white_balance/enabled"                default="true"/>
   <arg name="color_calibration/enabled"            default="false"/>
   <arg name="gamma_correction/enabled"             default="false"/>
-  <arg name="vignetting_correction/enabled"        default="false"/>
+  <arg name="vignetting_correction/enabled"        default="true"/>
   <arg name="color_enhancer/enabled"               default="false"/>
-  <arg name="undistortion/enabled"                 default="true"/>
+  <arg name="undistortion/enabled"                 default="false"/>
 
   <!-- Camera -->
   <!-- Debayer  -->
@@ -125,6 +126,11 @@
     <param name="undistortion/balance"                 value="$(arg undistortion/balance)"/>
     <param name="undistortion/fov_scale"               value="$(arg undistortion/fov_scale)"/>
     <param name="undistortion/calibration_file"        value="$(arg undistortion/calibration_file)"/>
+  </node>
+
+  <node name="image_converter" pkg="image_converter" type="image_converter" output="screen"> 
+    <param name="input_topic" value="$(arg compressed_topic)"/>
+    <param name="output_topic" value="$(arg input_topic)"/>
   </node>
 
 </launch>
